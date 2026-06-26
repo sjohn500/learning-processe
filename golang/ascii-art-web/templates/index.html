@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go ASCII Banner Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>&gt; ASCII_BANNER_GEN.exe</h1>
+        
+        <form method="POST" action="/">
+            <label for="text">Enter text to convert:</label>
+            <input type="text" id="text" name="text" value="{{.InputText}}" placeholder="Type something..." required maxlength="20">
+             <label for="banner">Select Banner:</label>
+            <select id="banner" name="banner">
+                {{range .AvailableFonts}}
+                    <option value="{{.}}" {{if eq . $.Selectedbanner}}selected{{end}}>{{.}}</option>
+                {{end}}
+            </select>
+            <button type="submit">[ GENERATE ]</button>
+        </form>
+
+        {{if .Error}}
+            <div class="error">ERROR: {{.Error}}</div>
+        {{end}}
+
+        {{if .AsciiArt}}
+            <h2>Output:</h2>
+            <!-- Go's template engine automatically escapes HTML, so < and > in your ASCII art won't break the page! -->
+            <pre class="ascii-output">{{.AsciiArt}}</pre>
+        {{end}}
+    </div>
+</body>
+</html>
